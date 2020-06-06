@@ -1,8 +1,8 @@
 package week2
 
-object MergeSortInvertions {
-    fun sort(list: List<Int>): Pair<List<Int>, Int> {
-        if (list.size <= 1) return list to 0
+object MergeSortInversions {
+    fun sort(list: List<Int>): Pair<List<Int>, Double> {
+        if (list.size <= 1) return list to 0.0
         val halfIndex = list.size / 2
         return merge(
             sort(list.subList(0, halfIndex)),
@@ -10,7 +10,7 @@ object MergeSortInvertions {
         )
     }
 
-    fun merge(leftPair: Pair<List<Int>, Int>, rightPair: Pair<List<Int>, Int>): Pair<List<Int>, Int> {
+    private fun merge(leftPair: Pair<List<Int>, Double>, rightPair: Pair<List<Int>, Double>): Pair<List<Int>, Double> {
         var inversionsCounter = leftPair.second + rightPair.second
         var leftIndex = 0
         var rightIndex = 0
@@ -26,30 +26,20 @@ object MergeSortInvertions {
             } else {
                 mergedList.add(rightList[rightIndex])
                 rightIndex++
-                inversionsCounter++
+                inversionsCounter += leftList.size.toDouble() - leftIndex
             }
         }
 
-        val nextLeftIndex = leftIndex + 1
-        if (nextLeftIndex < leftList.size) {
-            inversionsCounter += (leftList.size - nextLeftIndex) * rightList.size
-        }
-        println(inversionsCounter)
-
         while (leftIndex < leftList.size) {
-            // TODO improvement: we can add the entire remaining leftList items into the mergedList
             mergedList.add(leftList[leftIndex])
             leftIndex++
         }
 
         while (rightIndex < rightList.size) {
-            // TODO improvement: we can add the entire remaining rightList items into the mergedList
             mergedList.add(rightList[rightIndex])
             rightIndex++
         }
 
-        val result = mergedList to inversionsCounter
-        println(result)
-        return result
+        return mergedList to inversionsCounter
     }
 }

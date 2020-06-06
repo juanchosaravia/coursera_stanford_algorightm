@@ -1,9 +1,5 @@
-import week1.Karatsuba
 import week1.MergeSort
-import week2.ClosestPointsBruteForce
 import week2.MatrixMultiplicationBruteForce
-import week2.MergeSortInvertions
-import java.math.BigDecimal
 
 fun main() {
 
@@ -36,15 +32,6 @@ fun runMatrixMultiplication() {
 private fun runMergeSort() {
     val unsortedList = listOf(11, 5, 4, 3, 2, 1, 22, 98, 0, 3, 2)
     val sortedList = MergeSort.sort(unsortedList)
-    println(unsortedList)
-    println(sortedList)
-}
-
-private fun runMergeSortInversion() {
-    //val unsortedList = listOf(11, 5, 4, 3, 2, 1, 22, 98, 0, 3, 2)
-    // val unsortedList = listOf(4,3,2,1)
-    val unsortedList = listOf(7, 6, 5, 4, 3, 2, 1)
-    val sortedList = MergeSortInvertions.sort(unsortedList)
     println(unsortedList)
     println(sortedList)
 }
