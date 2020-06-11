@@ -30,9 +30,6 @@ class QuickSort(pivotType: PivotType = PivotType.FIRST) {
         }
     }
 
-    /**
-     * Sorts using as pivot the first item of the range.
-     */
     fun sort(array: IntArray): Pair<IntArray, Int> {
         if (array.size <= 1) return array to 0
         return quickSort(array, 0, array.size)
@@ -65,12 +62,6 @@ class QuickSort(pivotType: PivotType = PivotType.FIRST) {
         // swap pivot
         array[lIndex] = array[pivotFinalIndex]
         array[pivotFinalIndex] = pivot
-
-        /**
-        if (rIndex - lIndex < 4) {
-        // we are done
-        return array
-        }*/
 
         if (pivotFinalIndex == lIndex) {
             // sort only right side
