@@ -2,6 +2,7 @@ package week3
 
 import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.system.measureNanoTime
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -61,22 +62,37 @@ class QuickSortTest {
     @Test
     fun problem3PivotFirstItem() {
         val array = getProblem3Array()
-        val resultFirst = QuickSort().sort(array)
-        println(resultFirst.second) // 162085
+        val result = QuickSort().sort(array)
+        assertEquals(162085, result.second)
     }
 
     @Test
     fun problem3PivotLastItem() {
         val array = getProblem3Array()
         val result = QuickSort(QuickSort.PivotType.LAST).sort(array)
-        println(result.second) // 164123
+        assertEquals(164123, result.second)
     }
 
     @Test
     fun problem3PivotMedianItem() {
         val array = getProblem3Array()
-        val result = QuickSort(QuickSort.PivotType.MEDIAN).sort(array)
-        println(result.second) // 151001 / 138382
+        val time = measureNanoTime {
+            val result = QuickSort(QuickSort.PivotType.MEDIAN).sort(array)
+            assertEquals(138382, result.second)
+        }
+
+        println("Median: $time") // 9384766
+    }
+
+    @Test
+    fun problem3PivotRandomItem() {
+        val array = getProblem3Array()
+        val time = measureNanoTime {
+            val result = QuickSort(QuickSort.PivotType.RANDOM).sort(array)
+            println(result.second)
+        }
+
+        println("Random: $time") // 21033333
     }
 
     private fun getProblem3Array(): IntArray {

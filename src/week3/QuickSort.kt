@@ -1,5 +1,7 @@
 package week3
 
+import kotlin.random.Random
+
 class QuickSort(pivotType: PivotType = PivotType.FIRST) {
 
     private var pivotTypeSolver: (IntArray, Int, Int) -> Unit
@@ -10,37 +12,13 @@ class QuickSort(pivotType: PivotType = PivotType.FIRST) {
         array[lIndex] = lastValue
     }
 
-    /**
-     * public method just to add unit tests.
-     */
-    val onMedianPivot: (IntArray, Int, Int) -> Unit = { array, lIndex, rIndex ->
-        val size = rIndex - lIndex
-        val midIndex = if (size % 2 == 0) {
-            (size / 2) - 1
-        } else {
-            size / 2
-        } + lIndex
+    private val onMedianPivot: (IntArray, Int, Int) -> Unit = MedianPivotProcessor.create()
 
-        val leftValue = array[lIndex]
-        val midValue = array[midIndex]
-        val rightValue = array[rIndex - 1]
-
-        if (isMedian(midValue, leftValue, rightValue)) {
-            swapItemsInArray(array, lIndex, midIndex + 1)
-        } else if (isMedian(rightValue, leftValue, midValue)) {
-            swapItemsInArray(array, lIndex, rIndex)
-        }
-    }
-
-    private fun swapItemsInArray(array: IntArray, lIndex: Int, rIndex: Int) {
-        val lastValue = array[rIndex - 1]
-        array[rIndex - 1] = array[lIndex]
-        array[lIndex] = lastValue
-    }
-
-    private fun isMedian(item: Int, first: Int, second: Int): Boolean {
-        return (item <= first && item >= second) ||
-                (item >= first && item <= second)
+    private val onRandomPivot: (IntArray, Int, Int) -> Unit = { array, firstIndex, untilIndex ->
+        val randomIndex = Random.nextInt(firstIndex, untilIndex)
+        val firstValue = array[firstIndex]
+        array[firstIndex] = array[randomIndex]
+        array[randomIndex] = firstValue
     }
 
     init {
@@ -48,6 +26,7 @@ class QuickSort(pivotType: PivotType = PivotType.FIRST) {
             PivotType.FIRST -> { _, _, _ -> }
             PivotType.LAST -> onLastPivot
             PivotType.MEDIAN -> onMedianPivot
+            PivotType.RANDOM -> onRandomPivot
         }
     }
 
@@ -111,6 +90,6 @@ class QuickSort(pivotType: PivotType = PivotType.FIRST) {
     }
 
     enum class PivotType {
-        FIRST, LAST, MEDIAN
+        FIRST, LAST, MEDIAN, RANDOM
     }
 }
